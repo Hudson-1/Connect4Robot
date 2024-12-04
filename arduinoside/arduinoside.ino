@@ -1,78 +1,30 @@
 #include <Servo.h>
 
-// Constants
-const int NUM_SENSORS = 7;
-const int SENSOR_PINS[NUM_SENSORS] = {2, 3, 4, 5, 6, 7, 8}; // Break beam sensor pins
-const int SERVO_PIN = 9; // Servo control pin
-const int SERVO_POSITIONS[NUM_SENSORS] = {10, 30, 50, 70, 90, 110, 130}; // Servo positions for each column
+Servo servo;
 
-// Servo object
-Servo armServo;
-
-// Variables
-int detectedColumn = -1; // Stores the column detected by sensors
+int positions[] = {1265, 1330, 1392, 1450, 1515, 1572, 1645, 2300}; // Adjust angles for 7 positions
+const int restPosition = 2300; // Adjust based on rest position
 
 void setup() {
-  // Initialize servo
-  armServo.attach(SERVO_PIN);
-  armServo.write(0); // Start servo at home position
-
-  // Initialize break beam sensors as inputs
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    pinMode(SENSOR_PINS[i], INPUT_PULLUP); // Use internal pullup resistors
-  }
-
-  // Begin serial communication for debugging
   Serial.begin(9600);
-  Serial.println("Connect 4 Robot Initialized");
+  servo.attach(9);  // Attach the servo to pin 9
+  servo.write(restPosition);  // Move to rest position
 }
 
 void loop() {
-  // Detect human move
-  detectedColumn = detectHumanMove();
-  if (detectedColumn != -1) {
-    Serial.print("Human dropped a piece in column: ");
-    Serial.println(detectedColumn);
+  if (Serial.available() > 0) {
+    String command = Serial.readStringUntil('\n');
+    command.trim();
 
-    // Move servo to the detected column
-    moveArmToColumn(detectedColumn);
-
-    // Wait for the robot to place its piece
-    delay(1000);
-
-    // Move servo back to home position
-    moveArmHome();
-
-    // Wait for the human's next turn
-    delay(1000);
-  }
-}
-
-// Function to detect which column the human dropped a piece into
-int detectHumanMove() {
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    if (digitalRead(SENSOR_PINS[i]) == LOW) { // Sensor beam is broken
-      delay(500); // Debounce delay to avoid multiple detections
-      return i;
+    if (command.startsWith("MOVE_TO")) {
+      int col = command.substring(8).toInt();
+      if (col >= 0 && col <= 6) {
+        servo.write(positions[col]);
+        delay(2000);  // Wait for the servo to move
+      }
+    } else if (command == "RESET") {
+      servo.write(restPosition);
+      delay(2000);  // Wait for the servo to return
     }
   }
-  return -1; // No move detected
-}
-
-// Function to move the arm to the specified column
-void moveArmToColumn(int column) {
-  if (column >= 0 && column < NUM_SENSORS) {
-    int position = SERVO_POSITIONS[column];
-    Serial.print("Moving arm to column ");
-    Serial.println(column);
-    armServo.write(position); // Move servo to the specified position
-    delay(500); // Allow time for movement
-  }
-}
-
-// Function to move the arm back to the home position
-void moveArmHome() {
-  Serial.println("Moving arm to home position");
-  armServo.write(0); // Move servo to home position
-  delay(500); // Allow time for movement
 }

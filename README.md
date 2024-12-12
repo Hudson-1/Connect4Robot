@@ -31,6 +31,7 @@ Connect4Robot is a Connect 4 game where an AI-powered solver competes against a 
    pip install numpy pyserial pygame
    ```
 4. Upload the Arduino code located in `Arduino/arduinoside.ino` to your Arduino board using the Arduino IDE.
+
 5. Run the Python script for the game:
    ```bash
    python Python/connect4ai.py

@@ -1,7 +1,10 @@
 # Connect4Robot
+<p align="center">
+<img src="./Images/Asmb.png" alt="Physical Setup" width="500">
+   </p>
 
 ## Overview
-Connect4Robot is a Connect 4 game where an AI-powered solver competes against a human player. The game integrates Python logic for decision-making and Arduino for physical interaction using a servo motor to place game pieces on the board. This project demonstrates the combination of AI, robotics, and game mechanics to create an interactive experience.
+Connect4Robot is a Connect 4 game where an AI-powered solver competes against a human player. The game integrates Python logic for decision-making and Arduino for physical interaction using a servo motor to place game pieces on the board. This project demonstrates the combination of AI, robotics, and game mechanics to create an interactive experience. This is the first version, but there are many updates and improvements to come :grin:.
 
 ## Features
 - **AI Solver**: Utilizes the minimax algorithm with alpha-beta pruning to calculate optimal moves.

@@ -47,8 +47,8 @@ Connect4Robot is a Connect 4 game where an AI-powered solver competes against a 
 
 ## Next Steps
 - Make the game fully automated with computer vision so no computer input is needed
-- add a hopper for the robot
-- add a collection system, make the game entirely close loop 
+- Add a hopper for the robot
+- Add a collection system, make the game entirely closed loop 
 
 ## Credits
 - **[zakuraevs](https://github.com/zakuraevs/connect4-ai)**: Base solver and pygame implementation

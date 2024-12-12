@@ -2,7 +2,7 @@
 
 Servo servo;
 
-int positions[] = {1265, 1330, 1392, 1450, 1515, 1572, 1645, 2300}; // Adjust angles for 7 positions
+int positions[] = {1273, 1340, 1400, 1455, 1520, 1575, 1640, 2220}; // Adjust angles for 7 positions
 const int restPosition = 2300; // Adjust based on rest position
 
 void setup() {
